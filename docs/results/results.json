@@ -1,0 +1,100 @@
+{
+  "synthetic_data": true,
+  "seed": 42,
+  "k": 10,
+  "split": {
+    "train_cutoff": "2025-10-01T00:47:16.200000",
+    "validation_cutoff": "2025-11-08T21:54:08.800000",
+    "train_rows": 35518,
+    "validation_rows": 4616,
+    "test_rows": 6223,
+    "test_queries": 1325,
+    "test_candidate_count": {
+      "min": 1,
+      "median": 12.0,
+      "mean": 10.707169811320755,
+      "max": 17,
+      "fraction_at_most_k": 0.3939622641509434
+    }
+  },
+  "models": {
+    "Popularity": {
+      "fit_and_eval_seconds": 0.048,
+      "segments": {
+        "all": {
+          "recall": 0.879245283018868,
+          "ndcg": 0.46221867401586275,
+          "hit_rate": 0.879245283018868,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.879245283018868,
+          "ndcg": 0.46221867401586275,
+          "hit_rate": 0.879245283018868,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        }
+      }
+    },
+    "TF-IDF KNN": {
+      "fit_and_eval_seconds": 0.921,
+      "segments": {
+        "all": {
+          "recall": 0.9154716981132075,
+          "ndcg": 0.525488779964596,
+          "hit_rate": 0.9154716981132075,
+          "catalog_coverage": 0.168,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.9154716981132075,
+          "ndcg": 0.525488779964596,
+          "hit_rate": 0.9154716981132075,
+          "catalog_coverage": 0.168,
+          "queries": 1325
+        }
+      }
+    },
+    "Matrix Factorization": {
+      "fit_and_eval_seconds": 7.268,
+      "segments": {
+        "all": {
+          "recall": 0.8739622641509434,
+          "ndcg": 0.4250666450704987,
+          "hit_rate": 0.8739622641509434,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8739622641509434,
+          "ndcg": 0.4250666450704987,
+          "hit_rate": 0.8739622641509434,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        }
+      }
+    }
+  }
+}
