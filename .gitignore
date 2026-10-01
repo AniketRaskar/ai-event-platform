@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+ml/artifacts/
+ml/data/generated/
+rag/index/
+node_modules/
+dist/
+*.db
