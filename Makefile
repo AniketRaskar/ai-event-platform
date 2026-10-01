@@ -9,6 +9,7 @@ train:
 	python -m ml.train
 eval:
 	python -m ml.evaluation.run_experiments
+	python -m ml.evaluation.ablations
 index:
 	python -m rag.ingest
 rag-eval:

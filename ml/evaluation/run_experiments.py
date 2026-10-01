@@ -9,6 +9,7 @@ from ml.config import ROOT, SEED
 from ml.data.splits import DataSplit, build_split
 from ml.evaluation.metrics import evaluate_rankings
 from ml.models.baselines import MFBaseline, PopularityBaseline, TfidfKnnBaseline
+from ml.train import ordered_content, score_cases, train_model
 
 K = 10
 SEGMENTS = ("all", "warm", "cold")
@@ -34,6 +35,20 @@ def evaluate_model(model, split: DataSplit) -> dict[str, dict[str, float | int]]
         else:
             result[segment] = {"recall": None, "ndcg": None, "hit_rate": None,
                                "catalog_coverage": None, "queries": 0}
+    return result
+
+def evaluate_neumf(model, split: DataSplit) -> dict[str, dict[str, float | int]]:
+    """Evaluate NeuMF over flattened candidate batches, grouped by target type."""
+    ranked_all, relevant_all = score_cases(model, split.test_cases, split)
+    result = {}
+    for segment in SEGMENTS:
+        selected = [i for i, case in enumerate(split.test_cases) if segment == "all" or case.target_split == segment]
+        ranked = [ranked_all[i] for i in selected]
+        relevant = [relevant_all[i] for i in selected]
+        if ranked:
+            result[segment] = {**evaluate_rankings(ranked, relevant, len(split.events), K), "queries": len(ranked)}
+        else:
+            result[segment] = {"recall": None, "ndcg": None, "hit_rate": None, "catalog_coverage": None, "queries": 0}
     return result
 
 def run(output_dir: Path | None = None) -> dict:
@@ -63,6 +78,18 @@ def run(output_dir: Path | None = None) -> dict:
         metrics = evaluate_model(model, split)
         results["models"][name] = {"fit_and_eval_seconds": round(time.perf_counter() - started, 3), "segments": metrics}
         print(f"Completed {name}: {metrics['all']}")
+    content, embedding_backend = ordered_content(split)
+    results["embedding_backend"] = embedding_backend
+    for name, config in (
+        ("NeuMF (no content)", {"use_content": False, "id_dropout": 0.0, "user_side_features": False}),
+        ("NeuMF + content", {"use_content": True, "id_dropout": 0.3, "user_side_features": True}),
+    ):
+        started = time.perf_counter()
+        model, history = train_model(split, content, max_epochs=8, patience=2, seed=SEED, **config)
+        metrics = evaluate_neumf(model, split)
+        results["models"][name] = {"fit_and_eval_seconds": round(time.perf_counter() - started, 3),
+                                    "training_epochs": len(history), "segments": metrics}
+        print(f"Completed {name}: {metrics['all']}")
     json_path = output_dir / "results.json"
     json_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
     md_path = output_dir / "results.md"
@@ -72,9 +99,10 @@ def run(output_dir: Path | None = None) -> dict:
 
 def render_markdown(results: dict) -> str:
     """Render the result JSON as readable segment-by-model tables."""
-    lines = ["# Baseline recommendation evaluation", "", "All interactions and metrics below use the generated **synthetic** dataset. Metrics are from the latest `python -m ml.evaluation.run_experiments` run. Rankings are evaluated at K=10; each held-out positive user/event pair is one query.", "",
+    lines = ["# Recommendation evaluation", "", "All interactions and metrics below use the generated **synthetic** dataset. Metrics are from the latest `python -m ml.evaluation.run_experiments` run. Rankings are evaluated at K=10; each held-out positive user/event pair is one query.", "",
              f"- Seed: {results['seed']}", f"- Queries: {results['split']['test_queries']}",
-             f"- Train / validation / test interaction rows: {results['split']['train_rows']} / {results['split']['validation_rows']} / {results['split']['test_rows']}", ""]
+             f"- Train / validation / test interaction rows: {results['split']['train_rows']} / {results['split']['validation_rows']} / {results['split']['test_rows']}",
+             f"- Content embedding backend: {results.get('embedding_backend', 'not used')}", ""]
     for segment in SEGMENTS:
         lines.extend([f"## {segment.title()} targets", "", "| Model | Queries | Recall@10 | NDCG@10 | HitRate@10 | Catalog coverage@10 |", "|---|---:|---:|---:|---:|---:|"])
         for name, model_result in results["models"].items():

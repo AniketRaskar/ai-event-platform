@@ -19,7 +19,7 @@
   },
   "models": {
     "Popularity": {
-      "fit_and_eval_seconds": 0.048,
+      "fit_and_eval_seconds": 0.205,
       "segments": {
         "all": {
           "recall": 0.879245283018868,
@@ -45,7 +45,7 @@
       }
     },
     "TF-IDF KNN": {
-      "fit_and_eval_seconds": 0.921,
+      "fit_and_eval_seconds": 1.915,
       "segments": {
         "all": {
           "recall": 0.9154716981132075,
@@ -71,7 +71,7 @@
       }
     },
     "Matrix Factorization": {
-      "fit_and_eval_seconds": 7.268,
+      "fit_and_eval_seconds": 4.259,
       "segments": {
         "all": {
           "recall": 0.8739622641509434,
@@ -95,6 +95,61 @@
           "queries": 1325
         }
       }
+    },
+    "NeuMF (no content)": {
+      "fit_and_eval_seconds": 3.089,
+      "training_epochs": 3,
+      "segments": {
+        "all": {
+          "recall": 0.879245283018868,
+          "ndcg": 0.46221867401586275,
+          "hit_rate": 0.879245283018868,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.879245283018868,
+          "ndcg": 0.46221867401586275,
+          "hit_rate": 0.879245283018868,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        }
+      }
+    },
+    "NeuMF + content": {
+      "fit_and_eval_seconds": 6.021,
+      "training_epochs": 6,
+      "segments": {
+        "all": {
+          "recall": 0.88,
+          "ndcg": 0.4530450207215503,
+          "hit_rate": 0.88,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.88,
+          "ndcg": 0.4530450207215503,
+          "hit_rate": 0.88,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
     }
-  }
+  },
+  "embedding_backend": "sentence-transformers"
 }

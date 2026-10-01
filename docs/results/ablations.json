@@ -1,0 +1,332 @@
+{
+  "synthetic_data": true,
+  "seed": 42,
+  "k": 10,
+  "embedding_backend": "sentence-transformers",
+  "ablations": {
+    "No GMF": {
+      "settings": {
+        "use_gmf": false,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 5,
+      "best_validation_ndcg10": 0.434013215215348,
+      "seconds": 6.807,
+      "segments": {
+        "all": {
+          "recall": 0.8747169811320755,
+          "ndcg": 0.4499647704065711,
+          "hit_rate": 0.8747169811320755,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8747169811320755,
+          "ndcg": 0.4499647704065711,
+          "hit_rate": 0.8747169811320755,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
+    },
+    "No MLP": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": false,
+        "use_content": true,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 5,
+      "best_validation_ndcg10": 0.427661050522717,
+      "seconds": 3.758,
+      "segments": {
+        "all": {
+          "recall": 0.8875471698113208,
+          "ndcg": 0.46476763242762187,
+          "hit_rate": 0.8875471698113208,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8875471698113208,
+          "ndcg": 0.46476763242762187,
+          "hit_rate": 0.8875471698113208,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
+    },
+    "No content": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": false,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 5,
+      "best_validation_ndcg10": 0.44623313165180706,
+      "seconds": 4.128,
+      "segments": {
+        "all": {
+          "recall": 0.879245283018868,
+          "ndcg": 0.46221867401586275,
+          "hit_rate": 0.879245283018868,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.879245283018868,
+          "ndcg": 0.46221867401586275,
+          "hit_rate": 0.879245283018868,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        }
+      }
+    },
+    "ID dropout 0": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.0,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 3,
+      "best_validation_ndcg10": 0.3938855060740735,
+      "seconds": 2.963,
+      "segments": {
+        "all": {
+          "recall": 0.8867924528301887,
+          "ndcg": 0.4660222853418857,
+          "hit_rate": 0.8867924528301887,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8867924528301887,
+          "ndcg": 0.4660222853418857,
+          "hit_rate": 0.8867924528301887,
+          "catalog_coverage": 0.164,
+          "queries": 1325
+        }
+      }
+    },
+    "ID dropout 0.3": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 5,
+      "best_validation_ndcg10": 0.44209831035247593,
+      "seconds": 17.613,
+      "segments": {
+        "all": {
+          "recall": 0.88,
+          "ndcg": 0.4530450207215503,
+          "hit_rate": 0.88,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.88,
+          "ndcg": 0.4530450207215503,
+          "hit_rate": 0.88,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
+    },
+    "ID dropout 0.5": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.5,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 5,
+      "best_validation_ndcg10": 0.43658014663670913,
+      "seconds": 10.265,
+      "segments": {
+        "all": {
+          "recall": 0.8822641509433963,
+          "ndcg": 0.45547020496734486,
+          "hit_rate": 0.8822641509433963,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8822641509433963,
+          "ndcg": 0.45547020496734486,
+          "hit_rate": 0.8822641509433963,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
+    },
+    "Negatives 1": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 1
+      },
+      "epochs": 3,
+      "best_validation_ndcg10": 0.44487041914733005,
+      "seconds": 3.187,
+      "segments": {
+        "all": {
+          "recall": 0.8905660377358491,
+          "ndcg": 0.48827671469863265,
+          "hit_rate": 0.8905660377358491,
+          "catalog_coverage": 0.168,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8905660377358491,
+          "ndcg": 0.48827671469863265,
+          "hit_rate": 0.8905660377358491,
+          "catalog_coverage": 0.168,
+          "queries": 1325
+        }
+      }
+    },
+    "Negatives 4": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 4
+      },
+      "epochs": 5,
+      "best_validation_ndcg10": 0.44209831035247593,
+      "seconds": 4.91,
+      "segments": {
+        "all": {
+          "recall": 0.88,
+          "ndcg": 0.4530450207215503,
+          "hit_rate": 0.88,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.88,
+          "ndcg": 0.4530450207215503,
+          "hit_rate": 0.88,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
+    },
+    "Negatives 8": {
+      "settings": {
+        "use_gmf": true,
+        "use_mlp": true,
+        "use_content": true,
+        "id_dropout": 0.3,
+        "user_side_features": true,
+        "negatives": 8
+      },
+      "epochs": 4,
+      "best_validation_ndcg10": 0.4459166720755219,
+      "seconds": 5.684,
+      "segments": {
+        "all": {
+          "recall": 0.8890566037735849,
+          "ndcg": 0.4524373891731456,
+          "hit_rate": 0.8890566037735849,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        },
+        "warm": {
+          "recall": null,
+          "ndcg": null,
+          "hit_rate": null,
+          "catalog_coverage": null,
+          "queries": 0
+        },
+        "cold": {
+          "recall": 0.8890566037735849,
+          "ndcg": 0.4524373891731456,
+          "hit_rate": 0.8890566037735849,
+          "catalog_coverage": 0.16,
+          "queries": 1325
+        }
+      }
+    }
+  }
+}

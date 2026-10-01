@@ -1,10 +1,11 @@
-# Baseline recommendation evaluation
+# Recommendation evaluation
 
 All interactions and metrics below use the generated **synthetic** dataset. Metrics are from the latest `python -m ml.evaluation.run_experiments` run. Rankings are evaluated at K=10; each held-out positive user/event pair is one query.
 
 - Seed: 42
 - Queries: 1325
 - Train / validation / test interaction rows: 35518 / 4616 / 6223
+- Content embedding backend: sentence-transformers
 
 ## All targets
 
@@ -13,6 +14,8 @@ All interactions and metrics below use the generated **synthetic** dataset. Metr
 | Popularity | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
 | TF-IDF KNN | 1325 | 0.9155 | 0.5255 | 0.9155 | 0.1680 |
 | Matrix Factorization | 1325 | 0.8740 | 0.4251 | 0.8740 | 0.1640 |
+| NeuMF (no content) | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
+| NeuMF + content | 1325 | 0.8800 | 0.4530 | 0.8800 | 0.1600 |
 
 ## Warm targets
 
@@ -21,6 +24,8 @@ All interactions and metrics below use the generated **synthetic** dataset. Metr
 | Popularity | 0 | — | — | — | — |
 | TF-IDF KNN | 0 | — | — | — | — |
 | Matrix Factorization | 0 | — | — | — | — |
+| NeuMF (no content) | 0 | — | — | — | — |
+| NeuMF + content | 0 | — | — | — | — |
 
 ## Cold targets
 
@@ -29,6 +34,8 @@ All interactions and metrics below use the generated **synthetic** dataset. Metr
 | Popularity | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
 | TF-IDF KNN | 1325 | 0.9155 | 0.5255 | 0.9155 | 0.1680 |
 | Matrix Factorization | 1325 | 0.8740 | 0.4251 | 0.8740 | 0.1640 |
+| NeuMF (no content) | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
+| NeuMF + content | 1325 | 0.8800 | 0.4530 | 0.8800 | 0.1600 |
 
 ## Notes
 
