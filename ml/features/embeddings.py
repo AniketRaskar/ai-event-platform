@@ -5,6 +5,7 @@ import json
 import logging
 import os
 from pathlib import Path
+from functools import lru_cache
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 import numpy as np
@@ -25,21 +26,30 @@ def _digest(event_ids: list[int], texts: list[str]) -> str:
     payload = json.dumps(list(zip(event_ids, texts)), ensure_ascii=False, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
-def _sbert(texts: list[str], batch_size: int = 32) -> np.ndarray:
-    """Encode descriptions with the specified compact sentence transformer."""
+@lru_cache(maxsize=1)
+def _sentence_model():
+    """Load the CPU sentence transformer once per process."""
     os.environ.setdefault("HF_HUB_ETAG_TIMEOUT", "5")
     os.environ.setdefault("HF_HUB_DOWNLOAD_TIMEOUT", "10")
     from huggingface_hub import try_to_load_from_cache
     cached_modules = try_to_load_from_cache(MODEL_NAME, "modules.json")
-    if not isinstance(cached_modules, str) and os.getenv("HF_HUB_OFFLINE", "0") != "1":
+    if isinstance(cached_modules, str):
+        from sentence_transformers import SentenceTransformer
+        local_snapshot = Path(cached_modules).parent
+        return SentenceTransformer(str(local_snapshot), device="cpu", model_kwargs={"local_files_only": True})
+    if os.getenv("HF_HUB_OFFLINE", "0") != "1":
         try:
             with urlopen(Request("https://huggingface.co", method="HEAD"), timeout=3):
                 pass
         except (OSError, URLError, HTTPError) as exc:
             raise RuntimeError("Hugging Face is unreachable and the SBERT model is not cached locally") from exc
     from sentence_transformers import SentenceTransformer
-    model = SentenceTransformer(MODEL_NAME, device="cpu")
-    vectors = model.encode(texts, batch_size=batch_size, show_progress_bar=True, convert_to_numpy=True, normalize_embeddings=True)
+    return SentenceTransformer(MODEL_NAME, device="cpu")
+
+def _sbert(texts: list[str], batch_size: int = 32, show_progress_bar: bool = True) -> np.ndarray:
+    """Encode descriptions with the specified compact sentence transformer."""
+    model = _sentence_model()
+    vectors = model.encode(texts, batch_size=batch_size, show_progress_bar=show_progress_bar, convert_to_numpy=True, normalize_embeddings=True)
     if vectors.shape[1] != DIMENSIONS:
         raise ValueError(f"Expected {DIMENSIONS} SBERT dimensions, received {vectors.shape[1]}")
     return vectors.astype(np.float32)

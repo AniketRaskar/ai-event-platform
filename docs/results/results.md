@@ -12,10 +12,10 @@ All interactions and metrics below use the generated **synthetic** dataset. Metr
 | Model | Queries | Recall@10 | NDCG@10 | HitRate@10 | Catalog coverage@10 |
 |---|---:|---:|---:|---:|---:|
 | Popularity | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
-| TF-IDF KNN | 1325 | 0.9155 | 0.5255 | 0.9155 | 0.1680 |
+| TF-IDF KNN | 1325 | 0.9117 | 0.5254 | 0.9117 | 0.1680 |
 | Matrix Factorization | 1325 | 0.8740 | 0.4251 | 0.8740 | 0.1640 |
 | NeuMF (no content) | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
-| NeuMF + content | 1325 | 0.8800 | 0.4530 | 0.8800 | 0.1600 |
+| NeuMF + content | 1325 | 0.8860 | 0.4587 | 0.8860 | 0.1600 |
 
 ## Warm targets
 
@@ -32,10 +32,10 @@ All interactions and metrics below use the generated **synthetic** dataset. Metr
 | Model | Queries | Recall@10 | NDCG@10 | HitRate@10 | Catalog coverage@10 |
 |---|---:|---:|---:|---:|---:|
 | Popularity | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
-| TF-IDF KNN | 1325 | 0.9155 | 0.5255 | 0.9155 | 0.1680 |
+| TF-IDF KNN | 1325 | 0.9117 | 0.5254 | 0.9117 | 0.1680 |
 | Matrix Factorization | 1325 | 0.8740 | 0.4251 | 0.8740 | 0.1640 |
 | NeuMF (no content) | 1325 | 0.8792 | 0.4622 | 0.8792 | 0.1640 |
-| NeuMF + content | 1325 | 0.8800 | 0.4530 | 0.8800 | 0.1600 |
+| NeuMF + content | 1325 | 0.8860 | 0.4587 | 0.8860 | 0.1600 |
 
 ## Notes
 

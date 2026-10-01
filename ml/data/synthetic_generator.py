@@ -8,7 +8,9 @@ import pandas as pd
 from ml.config import CATEGORIES, DEPARTMENTS, GENERATED_DIR, N_EVENTS, N_USERS, SEED
 from ml.data.event_docs import build_event_copy
 
-BASE = datetime(2025, 1, 1)
+# Anchor the twelve-month synthetic window to the day generation runs so the
+# demo contains upcoming events instead of aging into an all-past catalog.
+BASE = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=364)
 
 def _users(rng: random.Random) -> tuple[list[dict], list[set[str]], list[dict]]:
     users: list[dict] = []

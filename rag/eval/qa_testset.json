@@ -1,0 +1,362 @@
+[
+  {
+    "question": "Where will Founder Forum EVT-143 take place?",
+    "answerable": true,
+    "gold_event_id": 143,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Founder Forum EVT-143?",
+    "answerable": true,
+    "gold_event_id": 143,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Founder Forum EVT-143?",
+    "answerable": true,
+    "gold_event_id": 143,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Founder Forum EVT-143?",
+    "answerable": true,
+    "gold_event_id": 143,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Founder Forum EVT-143?",
+    "answerable": true,
+    "gold_event_id": 143,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Founder Forum EVT-007 take place?",
+    "answerable": true,
+    "gold_event_id": 7,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Founder Forum EVT-007?",
+    "answerable": true,
+    "gold_event_id": 7,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Founder Forum EVT-007?",
+    "answerable": true,
+    "gold_event_id": 7,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Founder Forum EVT-007?",
+    "answerable": true,
+    "gold_event_id": 7,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Founder Forum EVT-007?",
+    "answerable": true,
+    "gold_event_id": 7,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will HackPVG EVT-098 take place?",
+    "answerable": true,
+    "gold_event_id": 98,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for HackPVG EVT-098?",
+    "answerable": true,
+    "gold_event_id": 98,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for HackPVG EVT-098?",
+    "answerable": true,
+    "gold_event_id": 98,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join HackPVG EVT-098?",
+    "answerable": true,
+    "gold_event_id": 98,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for HackPVG EVT-098?",
+    "answerable": true,
+    "gold_event_id": 98,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Interdepartment Cup EVT-061 take place?",
+    "answerable": true,
+    "gold_event_id": 61,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Interdepartment Cup EVT-061?",
+    "answerable": true,
+    "gold_event_id": 61,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Interdepartment Cup EVT-061?",
+    "answerable": true,
+    "gold_event_id": 61,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Interdepartment Cup EVT-061?",
+    "answerable": true,
+    "gold_event_id": 61,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Interdepartment Cup EVT-061?",
+    "answerable": true,
+    "gold_event_id": 61,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Vision Lab Challenge EVT-113 take place?",
+    "answerable": true,
+    "gold_event_id": 113,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Vision Lab Challenge EVT-113?",
+    "answerable": true,
+    "gold_event_id": 113,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Vision Lab Challenge EVT-113?",
+    "answerable": true,
+    "gold_event_id": 113,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Vision Lab Challenge EVT-113?",
+    "answerable": true,
+    "gold_event_id": 113,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Vision Lab Challenge EVT-113?",
+    "answerable": true,
+    "gold_event_id": 113,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Rangotsav EVT-182 take place?",
+    "answerable": true,
+    "gold_event_id": 182,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Rangotsav EVT-182?",
+    "answerable": true,
+    "gold_event_id": 182,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Rangotsav EVT-182?",
+    "answerable": true,
+    "gold_event_id": 182,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Rangotsav EVT-182?",
+    "answerable": true,
+    "gold_event_id": 182,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Rangotsav EVT-182?",
+    "answerable": true,
+    "gold_event_id": 182,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Campus Stage EVT-198 take place?",
+    "answerable": true,
+    "gold_event_id": 198,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Campus Stage EVT-198?",
+    "answerable": true,
+    "gold_event_id": 198,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Campus Stage EVT-198?",
+    "answerable": true,
+    "gold_event_id": 198,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Campus Stage EVT-198?",
+    "answerable": true,
+    "gold_event_id": 198,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Campus Stage EVT-198?",
+    "answerable": true,
+    "gold_event_id": 198,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Vision Lab Challenge EVT-185 take place?",
+    "answerable": true,
+    "gold_event_id": 185,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Vision Lab Challenge EVT-185?",
+    "answerable": true,
+    "gold_event_id": 185,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Vision Lab Challenge EVT-185?",
+    "answerable": true,
+    "gold_event_id": 185,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Vision Lab Challenge EVT-185?",
+    "answerable": true,
+    "gold_event_id": 185,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Vision Lab Challenge EVT-185?",
+    "answerable": true,
+    "gold_event_id": 185,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will HackPVG EVT-010 take place?",
+    "answerable": true,
+    "gold_event_id": 10,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for HackPVG EVT-010?",
+    "answerable": true,
+    "gold_event_id": 10,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for HackPVG EVT-010?",
+    "answerable": true,
+    "gold_event_id": 10,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join HackPVG EVT-010?",
+    "answerable": true,
+    "gold_event_id": 10,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for HackPVG EVT-010?",
+    "answerable": true,
+    "gold_event_id": 10,
+    "field": "team_size"
+  },
+  {
+    "question": "Where will Model Sprint EVT-105 take place?",
+    "answerable": true,
+    "gold_event_id": 105,
+    "field": "venue"
+  },
+  {
+    "question": "What is the registration fee for Model Sprint EVT-105?",
+    "answerable": true,
+    "gold_event_id": 105,
+    "field": "fee"
+  },
+  {
+    "question": "When does registration close for Model Sprint EVT-105?",
+    "answerable": true,
+    "gold_event_id": 105,
+    "field": "deadline"
+  },
+  {
+    "question": "Who is eligible to join Model Sprint EVT-105?",
+    "answerable": true,
+    "gold_event_id": 105,
+    "field": "eligibility"
+  },
+  {
+    "question": "What is the maximum team size for Model Sprint EVT-105?",
+    "answerable": true,
+    "gold_event_id": 105,
+    "field": "team_size"
+  },
+  {
+    "question": "What is the keynote speaker for Founder Forum EVT-143?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "keynote speaker"
+  },
+  {
+    "question": "What is the event menu for Founder Forum EVT-007?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "event menu"
+  },
+  {
+    "question": "What is the parking availability for HackPVG EVT-098?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "parking availability"
+  },
+  {
+    "question": "What is the Wi-Fi password for Interdepartment Cup EVT-061?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "Wi-Fi password"
+  },
+  {
+    "question": "What is the livestream link for Vision Lab Challenge EVT-113?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "livestream link"
+  },
+  {
+    "question": "What is the shuttle pickup time for Rangotsav EVT-182?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "shuttle pickup time"
+  },
+  {
+    "question": "What is the judging panel for Campus Stage EVT-198?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "judging panel"
+  },
+  {
+    "question": "What is the refund policy for Vision Lab Challenge EVT-185?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "refund policy"
+  },
+  {
+    "question": "What is the dress code for HackPVG EVT-010?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "dress code"
+  },
+  {
+    "question": "What is the meal options for Model Sprint EVT-105?",
+    "answerable": false,
+    "gold_event_id": null,
+    "field": "meal options"
+  }
+]

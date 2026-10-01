@@ -3,8 +3,8 @@
   "seed": 42,
   "k": 10,
   "split": {
-    "train_cutoff": "2025-10-01T00:47:16.200000",
-    "validation_cutoff": "2025-11-08T21:54:08.800000",
+    "train_cutoff": "2026-07-03T00:47:16.200000",
+    "validation_cutoff": "2026-08-10T21:54:08.800000",
     "train_rows": 35518,
     "validation_rows": 4616,
     "test_rows": 6223,
@@ -19,7 +19,7 @@
   },
   "models": {
     "Popularity": {
-      "fit_and_eval_seconds": 0.205,
+      "fit_and_eval_seconds": 0.183,
       "segments": {
         "all": {
           "recall": 0.879245283018868,
@@ -45,12 +45,12 @@
       }
     },
     "TF-IDF KNN": {
-      "fit_and_eval_seconds": 1.915,
+      "fit_and_eval_seconds": 4.012,
       "segments": {
         "all": {
-          "recall": 0.9154716981132075,
-          "ndcg": 0.525488779964596,
-          "hit_rate": 0.9154716981132075,
+          "recall": 0.9116981132075471,
+          "ndcg": 0.5254289844088046,
+          "hit_rate": 0.9116981132075471,
           "catalog_coverage": 0.168,
           "queries": 1325
         },
@@ -62,16 +62,16 @@
           "queries": 0
         },
         "cold": {
-          "recall": 0.9154716981132075,
-          "ndcg": 0.525488779964596,
-          "hit_rate": 0.9154716981132075,
+          "recall": 0.9116981132075471,
+          "ndcg": 0.5254289844088046,
+          "hit_rate": 0.9116981132075471,
           "catalog_coverage": 0.168,
           "queries": 1325
         }
       }
     },
     "Matrix Factorization": {
-      "fit_and_eval_seconds": 4.259,
+      "fit_and_eval_seconds": 13.192,
       "segments": {
         "all": {
           "recall": 0.8739622641509434,
@@ -97,7 +97,7 @@
       }
     },
     "NeuMF (no content)": {
-      "fit_and_eval_seconds": 3.089,
+      "fit_and_eval_seconds": 4.089,
       "training_epochs": 3,
       "segments": {
         "all": {
@@ -124,13 +124,13 @@
       }
     },
     "NeuMF + content": {
-      "fit_and_eval_seconds": 6.021,
-      "training_epochs": 6,
+      "fit_and_eval_seconds": 9.764,
+      "training_epochs": 8,
       "segments": {
         "all": {
-          "recall": 0.88,
-          "ndcg": 0.4530450207215503,
-          "hit_rate": 0.88,
+          "recall": 0.8860377358490567,
+          "ndcg": 0.45866615547645906,
+          "hit_rate": 0.8860377358490567,
           "catalog_coverage": 0.16,
           "queries": 1325
         },
@@ -142,9 +142,9 @@
           "queries": 0
         },
         "cold": {
-          "recall": 0.88,
-          "ndcg": 0.4530450207215503,
-          "hit_rate": 0.88,
+          "recall": 0.8860377358490567,
+          "ndcg": 0.45866615547645906,
+          "hit_rate": 0.8860377358490567,
           "catalog_coverage": 0.16,
           "queries": 1325
         }
