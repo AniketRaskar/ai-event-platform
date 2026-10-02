@@ -65,3 +65,13 @@ class Notification(Base):
     message: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     read: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+class EventActionLog(Base):
+    """Append-only event impressions and clicks for future recommendation analysis."""
+    __tablename__ = "event_action_logs"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    event_id: Mapped[int] = mapped_column(ForeignKey("events.id", ondelete="CASCADE"), nullable=False, index=True)
+    action: Mapped[str] = mapped_column(String(40), nullable=False, index=True)
+    source: Mapped[str] = mapped_column(String(40), default="events", nullable=False)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False, index=True)

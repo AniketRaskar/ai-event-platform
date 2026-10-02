@@ -7,7 +7,7 @@ import secrets
 import pandas as pd
 from sqlalchemy import select
 from backend.app.database import Base, SessionLocal, engine
-from backend.app.models import Event, Friendship, Interaction, Notification, User
+from backend.app.models import Event, EventActionLog, Friendship, Interaction, Notification, User
 from ml.config import DATABASE_PATH, GENERATED_DIR
 
 def hash_password(password: str) -> str:
@@ -35,7 +35,7 @@ def seed() -> None:
     db = SessionLocal()
     try:
         # A clean seed is deterministic and avoids duplicate rows on repeated `make data` runs.
-        for model in (Notification, Interaction, Friendship, Event, User):
+        for model in (EventActionLog, Notification, Interaction, Friendship, Event, User):
             db.query(model).delete()
         db.commit()
         user_df, event_df, friend_df, interaction_df = [pd.read_csv(p) for p in required]

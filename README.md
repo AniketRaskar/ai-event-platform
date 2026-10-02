@@ -1,6 +1,6 @@
 # AI Event Platform v2
 
-A local college event platform combining personalized recommendations with a grounded event-information chatbot. It includes a reproducible synthetic data pipeline, NeuMF recommendations, a hybrid RAG assistant, and a FastAPI/React scaffold.
+A local college event platform combining personalized recommendations with a grounded event-information chatbot. It includes a reproducible synthetic data pipeline, NeuMF recommendations, a hybrid RAG assistant, a FastAPI backend, and a responsive React frontend.
 
 All generated users, events, friendships, and interactions are synthetic. On Windows, install dependencies with `python -m pip install -r ml/requirements.txt -r backend/requirements.txt`, then generate data with `python -m ml.data.synthetic_generator` and `python -m ml.data.seed_db`.
 
@@ -31,3 +31,32 @@ Warm target results are unavailable: the test split has no warm targets. Events 
 | Hybrid RRF | 1.000 |
 
 The measured refusal accuracy on 50 answerable and 10 unanswerable questions was 1.000. To build or refresh the local index and ask a question, run `python -m rag.ingest` followed by `python -m rag.cli "Where will Model Sprint EVT-001 take place?"`. Full measurements are in [`docs/results/rag_results.md`](docs/results/rag_results.md).
+
+## Run the API (Windows PowerShell)
+
+The local API uses the seeded SQLite database and needs no hosted service. From the repository root:
+
+```powershell
+python -m pip install -r backend/requirements.txt
+$env:SECRET_KEY = "replace-this-with-a-long-random-local-secret"
+python -m uvicorn backend.app.main:app --reload --port 8000
+```
+
+Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for interactive API documentation. The seeded accounts are `admin@college.edu` / `admin123` and `student@college.edu` / `student123`. Login at `POST /auth/login` returns a bearer token; use it for profile, recommendations, chat, notifications, event actions and admin routes. Public event search and details are available without login.
+
+The API exposes registration/login/profile routes, filtered event discovery, admin event creation and editing, registration/like/dislike/view/feedback actions, personalized `GET /recommend?k=10`, grounded `POST /chat`, notifications, and admin registration/analytics summaries. `GET /health` checks database connectivity. Posting or editing an event refreshes the RAG index immediately; recommendation impressions and event actions are written to `event_action_logs`.
+
+The recommender uses the trained NeuMF artifact when the user and event are in its ID maps. New accounts and events use a profile, friend-activity and popularity fallback. If you regenerated data, rebuild the trained artifact with `python -m ml.train` before starting the API.
+
+## Run the web app (Windows PowerShell)
+
+Start the API in one PowerShell window using the command above. In a second window, from the repository root:
+
+```powershell
+cd frontend
+npm install
+$env:VITE_API_URL = "http://127.0.0.1:8000"
+npm run dev -- --host 127.0.0.1
+```
+
+Open [http://127.0.0.1:5173](http://127.0.0.1:5173). The web app includes login and account creation, interest onboarding, personalized event cards, event search and filters, event details and registration, a persistent chat widget with event citations, notifications, and an admin dashboard for publishing events and viewing registrations and analytics. It uses the default `127.0.0.1:8000` API address if `VITE_API_URL` is not set.

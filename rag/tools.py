@@ -18,7 +18,7 @@ def get_event(event_id: int) -> dict | None:
         return _event_payload(event) if event else None
 
 def recommend_events(user_id: int | None = None, filters: dict | None = None, limit: int = 5) -> list[dict]:
-    """Return a popularity-based event list until Phase 5 wires in NeuMF."""
+    """Return personalized event picks when a user is known, otherwise popular picks."""
     filters = filters or {}
     now = datetime.now()
     query = select(Event, func.count(Interaction.id).label("popularity")).outerjoin(
@@ -38,5 +38,12 @@ def recommend_events(user_id: int | None = None, filters: dict | None = None, li
         query = query.where(Event.start_time < filters["start_before"])
     query = query.group_by(Event.id).order_by(func.count(Interaction.id).desc(), Event.start_time.asc()).limit(limit)
     with SessionLocal() as db:
+        if user_id is not None:
+            from backend.app.models import User
+            from backend.app.services.recommender import recommend_for_user
+            user = db.get(User, user_id)
+            if user is not None:
+                rows = recommend_for_user(db, user, limit=limit, filters=filters)
+                return [_event_payload(row["event"], row["score"], row["reason"]) for row in rows]
         rows = db.execute(query).all()
         return [_event_payload(event, float(popularity), "Popular with students") for event, popularity in rows]

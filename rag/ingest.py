@@ -137,7 +137,9 @@ def add_event(event: Any, index_dir: Path = INDEX_DIR) -> list[dict]:
     with _WRITE_LOCK:
         chunks_path = index_dir / "chunks.json"
         if not chunks_path.exists():
-            return rebuild([event], index_dir=index_dir)
+            # First-time initialization must index every event already in SQLite,
+            # not just the newly created one.
+            return rebuild(index_dir=index_dir)
         chunks = json.loads(chunks_path.read_text(encoding="utf-8"))
         event_id = int(_value(event, "id"))
         chunks = [chunk for chunk in chunks if chunk["metadata"].get("event_id") != event_id]

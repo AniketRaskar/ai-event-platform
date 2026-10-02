@@ -17,6 +17,6 @@ rag-eval:
 api:
 	python -m uvicorn backend.app.main:app --reload --port 8000
 web:
-	cd frontend && npm run dev -- --host 0.0.0.0
+	cd frontend && npm run dev -- --host 127.0.0.1
 test:
 	python -m pytest -q
