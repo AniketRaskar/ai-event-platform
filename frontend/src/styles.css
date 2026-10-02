@@ -203,7 +203,14 @@ h1, h2, h3, p { margin-top: 0; }
 .metric-title { flex: 1; overflow: hidden; color: #5e5a6c; text-overflow: ellipsis; white-space: nowrap; }
 .metric-row strong { color: #5145a2; }
 .registrations-select { display: flex; flex-direction: column; gap: 7px; margin-top: 21px; color: #777487; font-size: 9px; }
-.registrations-select select { padding: 9px; border: 1px solid #e8e5ec; border-radius: 6px; background: #fff; color: #514e62; font-size: 10px; }
+.registrations-select select, .registrations-select input { min-height: 37px; padding: 9px; border: 1px solid #e8e5ec; border-radius: 6px; outline: none; background: #fff; color: #514e62; font-size: 10px; }
+.registrations-select select:focus, .registrations-select input:focus { border-color: #a89ee8; box-shadow: 0 0 0 3px rgba(102,84,217,.08); }
+.event-analytics { margin-top: 17px; padding: 12px; border: 1px solid #eeecf1; border-radius: 7px; background: #fcfbfd; }
+.event-analytics .subheading { margin: 0 0 10px; }
+.event-analytics-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.event-analytics-grid > div { display: flex; flex-direction: column; gap: 5px; padding: 9px; border-radius: 5px; background: #fff; }
+.event-analytics-grid span { color: #898695; font-size: 8px; }
+.event-analytics-grid strong { color: #5145a2; font-size: 14px; }
 .registration-list { display: flex; flex-direction: column; gap: 9px; max-height: 230px; overflow: auto; padding-top: 12px; }
 .registration-list > div { display: flex; align-items: center; gap: 8px; font-size: 9px; }
 .registration-list small { display: block; margin-top: 3px; color: #9995a3; font-size: 8px; }

@@ -7,6 +7,12 @@ from rag.query_rewrite import rewrite_query
 
 REFUSAL = "I don't have that information."
 DEFAULT_MIN_CONFIDENCE = 0.18
+EVENT_FIELD_TERMS = {
+    "deadline": ("deadline", "registration closes", "register by", "last day to register"),
+    "date": ("date", "when", "what day", "schedule", "start", "time"),
+    "venue": ("venue", "where", "location", "place", "held", "take place"),
+    "fee": ("fee", "cost", "price", "paid", "free", "how much"),
+}
 UNSUPPORTED_FIELD_GROUPS = {
     ("speaker", "keynote", "presenter", "panelist"): ("speaker", "keynote", "presenter", "panelist"),
     ("menu", "meal", "food", "snack"): ("menu", "meal", "food", "snack", "refreshment"),
@@ -24,6 +30,70 @@ def citation_for(metadata: dict) -> str:
     """Format the citation token for an event or general guide chunk."""
     event_id = metadata.get("event_id")
     return f"[E{event_id}]" if event_id is not None else f"[G:{metadata.get('doc_id', 'guide')}]"
+
+
+def _normal_words(value: str) -> str:
+    """Normalize titles and questions for punctuation-insensitive name matching."""
+    return " ".join(re.findall(r"[a-z0-9]+", value.casefold()))
+
+
+def _asks_for(lower_question: str, terms: tuple[str, ...]) -> bool:
+    """Match field words as whole words so they don't match inside event names."""
+    return any(re.search(rf"\b{re.escape(term)}\b", lower_question) for term in terms)
+
+
+def _event_named_in_question(question: str):
+    """Find events whose full or non-code title appears in a question."""
+    from sqlalchemy import select
+    from backend.app.database import SessionLocal
+    from backend.app.models import Event
+
+    normalized_question = _normal_words(question)
+    with SessionLocal() as db:
+        events = list(db.scalars(select(Event).order_by(Event.id)))
+    matches = []
+    for event in events:
+        title = _normal_words(event.title)
+        if not title:
+            continue
+        # Synthetic titles end in an ID such as EVT-024. Matching the title
+        # without that code is useful, but may be ambiguous across many events.
+        base_title = re.sub(r"\s+evt\s+\d+$", "", title)
+        if f" {title} " in f" {normalized_question} " or (
+                base_title != title and f" {base_title} " in f" {normalized_question} "):
+            matches.append(event)
+    if not matches:
+        return None, []
+    # A full title including its code is a stronger, unambiguous match.
+    full_matches = [event for event in matches if f" {_normal_words(event.title)} " in f" {normalized_question} "]
+    return (full_matches or matches)[0] if len(full_matches or matches) == 1 else None, (full_matches or matches)
+
+
+def _answer_named_event_field(question: str) -> dict | None:
+    """Answer date, venue, fee, or deadline from the live event database."""
+    lower = question.casefold()
+    field = next((name for name, terms in EVENT_FIELD_TERMS.items() if _asks_for(lower, terms)), None)
+    if field is None:
+        return None
+    event, matches = _event_named_in_question(question)
+    if event is None:
+        if not matches:
+            return None
+        choices = ", ".join(f"{item.title} [E{item.id}]" for item in matches[:5])
+        more = " There are more matches; include the event code to narrow it down." if len(matches) > 5 else ""
+        return {"answer": f"I found multiple events matching that name: {choices}.{more} Please include the full event name or event code.",
+                "citations": [item.id for item in matches[:5]], "confidence": 1.0}
+
+    citation = f"[E{event.id}]"
+    if field == "date":
+        answer = f"{event.title} starts on {event.start_time.strftime('%A, %d %B %Y at %I:%M %p')}. {citation}"
+    elif field == "venue":
+        answer = f"{event.title} will be held at {event.venue}. {citation}"
+    elif field == "fee":
+        answer = f"{event.title} is free to attend. {citation}" if event.fee == 0 else f"The fee for {event.title} is ₹{event.fee:g}. {citation}"
+    else:
+        answer = f"Registration for {event.title} closes on {event.registration_deadline.strftime('%A, %d %B %Y at %I:%M %p')}. {citation}"
+    return {"answer": answer, "citations": [event.id], "confidence": 1.0}
 
 def grounded_prompt(question: str, context_chunks: list[dict]) -> str:
     """Build a prompt that restricts claims to cited retrieved context."""
@@ -71,6 +141,9 @@ def answer_question(question: str, context_chunks: list[dict] | None = None,
 
 def generate_answer(question: str, top_k: int = 5, **retrieve_options) -> dict:
     """Retrieve context and produce a grounded response in one call."""
+    named_answer = _answer_named_event_field(question)
+    if named_answer is not None:
+        return named_answer
     from rag.retrieve import retrieve
     contexts = retrieve(question, top_k=top_k, **retrieve_options)
     return answer_question(question, contexts)

@@ -22,6 +22,27 @@ def registrations(event_id: int, db: Session = Depends(get_db), _admin: User = D
              "year": row.year, "registered_at": row.timestamp} for row in rows]
 
 
+@router.get("/events/{event_id}/analytics")
+def event_analytics(event_id: int, db: Session = Depends(get_db), _admin: User = Depends(require_admin)):
+    """Return engagement counts for one event's admin detail view."""
+    if db.get(Event, event_id) is None:
+        raise HTTPException(status_code=404, detail="Event not found")
+    counts = {kind: db.scalar(select(func.count(Interaction.id)).where(
+        Interaction.event_id == event_id, Interaction.type == kind)) or 0
+        for kind in ("register", "like")}
+    impressions = db.scalar(select(func.count(EventActionLog.id)).where(
+        EventActionLog.event_id == event_id, EventActionLog.action == "recommend_impression")) or 0
+    clicks = db.scalar(select(func.count(EventActionLog.id)).where(
+        EventActionLog.event_id == event_id, EventActionLog.action == "view",
+        EventActionLog.source == "recommend")) or 0
+    views = db.scalar(select(func.count(EventActionLog.id)).where(
+        EventActionLog.event_id == event_id, EventActionLog.action == "view")) or 0
+    return {"event_id": event_id, "registrations": counts["register"], "likes": counts["like"],
+            "views": views, "recommendation_impressions": impressions,
+            "recommendation_clicks": clicks,
+            "recommendation_click_through_rate": round(clicks / impressions, 4) if impressions else None}
+
+
 @router.get("/analytics")
 def analytics(db: Session = Depends(get_db), _admin: User = Depends(require_admin)):
     """Return simple event registration/like summaries and impression placeholders."""

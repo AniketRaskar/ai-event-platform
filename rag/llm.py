@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import os
 import re
+from datetime import datetime
 from typing import Any
 import requests
 
@@ -66,9 +67,14 @@ def _answer_event_field(question: str, chunks: list[dict]) -> str | None:
             match = re.search(r"Eligibility:\s*(.*?)\s+Description:", text, flags=re.IGNORECASE)
             if match:
                 return f"Eligibility for {title}: {match.group(1).strip()} {citation}"
-        if any(term in lower for term in ("when is", "what date", "event date")):
+        if re.search(r"\b(when|date|time|start)\b", lower):
             if metadata.get("start_time"):
-                return f"{title} starts at {metadata['start_time']} {citation}"
+                try:
+                    start = datetime.fromisoformat(str(metadata["start_time"]).replace("Z", "+00:00"))
+                    start_text = start.strftime("%A, %d %B %Y at %I:%M %p")
+                except ValueError:
+                    start_text = str(metadata["start_time"])
+                return f"{title} starts on {start_text} {citation}"
     return None
 
 def generate(prompt: str, context_chunks: list[dict] | None = None) -> str:

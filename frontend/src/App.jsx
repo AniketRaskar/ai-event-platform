@@ -111,6 +111,8 @@ function AdminPanel({ notify }) {
   const [analytics, setAnalytics] = useState(null);
   const [events, setEvents] = useState([]);
   const [chosenId, setChosenId] = useState("");
+  const [eventSearch, setEventSearch] = useState("");
+  const [eventAnalytics, setEventAnalytics] = useState(null);
   const [registrations, setRegistrations] = useState([]);
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", category: CATEGORIES[0], department: DEPARTMENTS[0], organizer: "", venue: "", start_time: "", end_time: "", registration_deadline: "", fee: 0, capacity: 100, eligibility: "Open to enrolled students", rules: "Bring your student ID and arrive 15 minutes early.", faq: [] });
@@ -118,7 +120,16 @@ function AdminPanel({ notify }) {
     Promise.all([api("/admin/analytics"), api("/events?limit=250")]).then(([data, eventRows]) => { setAnalytics(data); setEvents(eventRows); })
       .catch((error) => notify(error.message, "error"));
   }, [notify]);
-  useEffect(() => { if (chosenId) api(`/admin/events/${chosenId}/registrations`).then(setRegistrations).catch((error) => notify(error.message, "error")); }, [chosenId, notify]);
+  useEffect(() => {
+    if (!chosenId) { setEventAnalytics(null); setRegistrations([]); return; }
+    let cancelled = false;
+    setEventAnalytics(null);
+    Promise.all([api(`/admin/events/${chosenId}/analytics`), api(`/admin/events/${chosenId}/registrations`)]).
+      then(([data, rows]) => { if (!cancelled) { setEventAnalytics(data); setRegistrations(rows); } }).
+      catch((error) => { if (!cancelled) notify(error.message, "error"); });
+    return () => { cancelled = true; };
+  }, [chosenId, notify]);
+  const matchingEvents = events.filter((item) => item.title.toLocaleLowerCase().includes(eventSearch.trim().toLocaleLowerCase()));
   const change = (key) => (event) => setForm((current) => ({ ...current, [key]: event.target.type === "number" ? Number(event.target.value) : event.target.value }));
   const create = async (event) => {
     event.preventDefault(); setBusy(true);
@@ -147,7 +158,10 @@ function AdminPanel({ notify }) {
     <div className="panel analytics-panel"><div className="panel-heading"><div><p className="eyebrow">WHAT'S HAPPENING</p><h2>Campus pulse</h2></div><span className="pulse-dot"/></div>
       <h3 className="subheading">Top events by registration</h3>{analytics?.top_events?.length ? <div className="metric-list">{analytics.top_events.slice(0, 6).map((item, index) => <div className="metric-row" key={item.event_id}><span className="metric-index">0{index + 1}</span><span className="metric-title">{item.title}</span><strong>{item.registrations}</strong></div>)}</div> : <p className="muted">No registrations yet.</p>}
       <h3 className="subheading">Likes by category</h3>{analytics?.likes_per_category?.length ? <div className="metric-list">{analytics.likes_per_category.slice(0, 5).map((item) => <div className="metric-row" key={item.category}><span className="metric-title">{item.category}</span><strong>{item.likes}</strong></div>)}</div> : <p className="muted">Category activity will appear here.</p>}
-      <label className="registrations-select">View registrations<select value={chosenId} onChange={(event) => setChosenId(event.target.value)}><option value="">Choose an event</option>{events.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
+      <label className="registrations-select">Search event by name<input type="search" value={eventSearch} onChange={(event) => setEventSearch(event.target.value)} placeholder="Type an event name…" /></label>
+      <label className="registrations-select">View event analytics<select value={chosenId} onChange={(event) => setChosenId(event.target.value)}><option value="">Choose an event ({matchingEvents.length} found)</option>{matchingEvents.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
+      {eventSearch && !matchingEvents.length && <p className="muted">No events match “{eventSearch}”. Try another name.</p>}
+      {chosenId && eventAnalytics && <div className="event-analytics" aria-live="polite"><h3 className="subheading">{events.find((item) => String(item.id) === String(chosenId))?.title} analytics</h3><div className="event-analytics-grid"><div><span>Registrations</span><strong>{eventAnalytics.registrations}</strong></div><div><span>Likes</span><strong>{eventAnalytics.likes}</strong></div><div><span>Event views</span><strong>{eventAnalytics.views}</strong></div><div><span>Recommendation CTR</span><strong>{eventAnalytics.recommendation_click_through_rate == null ? "—" : `${Math.round(eventAnalytics.recommendation_click_through_rate * 100)}%`}</strong></div></div></div>}
       {chosenId && <div className="registration-list">{registrations.length ? registrations.map((student) => <div key={student.id}><span className="avatar tiny">{initials(student.name)}</span><span>{student.name}<small>{student.department} · Year {student.year}</small></span></div>) : <p className="muted">No registrations for this event yet.</p>}</div>}
     </div></div>
   </section>;
